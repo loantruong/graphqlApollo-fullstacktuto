@@ -1,4 +1,8 @@
 const { ApolloServer } = require("apollo-server");
-import { typeDefs } from '../../../final/client/src/resolvers';
+const typeDefs = require('./schema')
 
 const server = new ApolloServer({typeDefs});
+
+server.listen().then(({url}) => {
+  console.log(`server ready at ${url}`)
+})
