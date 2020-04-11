@@ -25,7 +25,7 @@ const typeDefs = gql`
 
   type Mission {
     name: String
-    missionPatch(size: PatchSize): String
+    missionPatch(mission: String, size: PatchSize): String
   }
 
   enum PatchSize {
@@ -48,16 +48,16 @@ const typeDefs = gql`
   me: User
 }
 
-"""
-Simple wrapper around our list of launches that contains a cursor to the
-last item in the list. Pass this cursor to the launches query to fetch results
-after these.
-"""
-type LaunchConnection { # add this below the Query type as an additional type.
-  cursor: String!
-  hasMore: Boolean!
-  launches: [Launch]!
-}
+  """
+  Simple wrapper around our list of launches that contains a cursor to the
+  last item in the list. Pass this cursor to the launches query to fetch results
+  after these.
+  """
+  type LaunchConnection { # add this below the Query type as an additional type.
+    cursor: String!
+    hasMore: Boolean!
+    launches: [Launch]!
+  }
   type Mutation {
     bookTrips(launchIds: [ID]!): TripUpdateResponse!
     cancelTrip(launchId: ID!): TripUpdateResponse!
@@ -68,9 +68,12 @@ type LaunchConnection { # add this below the Query type as an additional type.
   type TripUpdateResponse {
     success: Boolean!
     message: String
-    lauches: [Launch] #array of modification by mutation
+    launches: [Launch] #array of modification by mutation
   }
 
+
 `;
+
+
 
 module.exports = typeDefs;
