@@ -2,31 +2,26 @@ import React, { Fragment } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 
+import { LAUNCH_TILE_DATA } from "./launches";
 import { Loading, Header, LaunchDetail } from "../components";
 import { ActionButton } from "../containers";
 import { RouteComponentProps } from "@reach/router";
 import * as LaunchDetailsTypes from "./__generated__/LaunchDetails";
 
-import { LAUNCH_TILE_DATA } from "./launches";
-
 export const GET_LAUNCH_DETAILS = gql`
   query LaunchDetails($launchId: ID!) {
     launch(id: $launchId) {
-      id
+      isInCart @client
       site
-      isBooked
       rocket {
-        id
-        name
         type
       }
-      mission {
-        name
-        missionPatch
-      }
+      ...LaunchTile
     }
   }
+  ${LAUNCH_TILE_DATA}
 `;
+
 interface LaunchProps extends RouteComponentProps {
   launchId?: any;
 }
